@@ -37,7 +37,7 @@ export class TasksService {
     return found;
   }
 
-  async createTask(createTaskDto: CreateTaskDto): Promise<Task> {
+  createTask(createTaskDto: CreateTaskDto): Promise<Task> {
     return this.taskRepository.createTask(createTaskDto);
   }
 
@@ -46,6 +46,15 @@ export class TasksService {
   //   task.status = status;
   //   return task;
   // }
+
+  async deleteTask(id: number): Promise<void> {
+    const found = await this.getTaskById(id);
+
+    if (!found) throw new NotFoundException(`Task with ID "${id}" not found`);
+
+    await this.taskRepository.delete(found.id);
+  }
+
   // deleteTask(id: string): void {
   //   const found = this.getTaskById(id);
   //   this.tasks = this.tasks.filter((task) => task.id !== found.id);

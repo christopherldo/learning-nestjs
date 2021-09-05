@@ -49,10 +49,7 @@ export class TasksService {
 
   async deleteTask(id: number): Promise<void> {
     const found = await this.getTaskById(id);
-
-    if (!found) throw new NotFoundException(`Task with ID "${id}" not found`);
-
-    await this.taskRepository.delete(found.id);
+    this.taskRepository.delete(found.id);
   }
 
   // deleteTask(id: string): void {
